@@ -1,6 +1,6 @@
 (declare-project
   :name "tw"
-  :description "Easy generation of per page tailwind.css styles"
+  :description "Generate just the tailwind.css styles you need"
   :dependencies []
   :author "Sean Walker"
   :license "MIT"
