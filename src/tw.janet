@@ -1,7 +1,9 @@
 (import ./tw/tailwind)
 
 (var- tw/styles @{})
+(var- tw/classes @{})
 (var- *tailwind.min.css* "")
+(var- normalize nil)
 (var- shown 0)
 
 
@@ -19,19 +21,27 @@
 
   (let [str (eval str)]
 
+    (unless (get tw/classes url)
+      (put tw/classes url @[]))
+
+    # concat the class names into
+    # the tw/classes dictionary
+    # throw the global ones in there as well
+    (update tw/classes url (comp distinct array/concat) (get tw/classes "" "") (string/split " " str))
+
     (with [f (file/open *tailwind.min.css*)]
 
       (let [css (file/read f :all)
 
-            classes (array/concat (string/split " " str)
-                                  (get tw/styles url ""))
-            styles (tailwind/styles css classes)]
+            styles (tailwind/styles css (get tw/classes url ""))]
 
-        (update tw/styles url string styles)))
+        (unless normalize
+          (set normalize (tailwind/normalize css)))
+
+        (put tw/styles url styles)))
 
     str))
 
 
-
 (defn style [uri]
-  (string (get tw/styles "" "") " " (get tw/styles uri "")))
+  (string normalize (get tw/styles uri "")))

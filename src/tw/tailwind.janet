@@ -50,14 +50,16 @@
     (peg/compile p)))
 
 
+(defn normalize [css]
+  (string/slice css 0 (inc (string/find "}.container" css))))
+
+
 (defn styles [css classes]
-  (let [normalize-css (string/slice css 0 (inc (string/find "}.container" css)))
-        classes (->> (sort classes)
+  (let [classes (->> (sort classes)
                      (reverse)
                      (map |(string/replace-all `/` `\/` $))
                      (map |(string/replace-all `:` `\:` $)))]
 
     (as-> (css-class-peg classes) ?
           (peg/match ? css)
-          (media-queries ?)
-          (string normalize-css ?))))
+          (media-queries ?))))
