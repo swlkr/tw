@@ -1,0 +1,4 @@
+build
+/.env
+*.sqlite3
+/tailwind.css
