@@ -10,7 +10,7 @@ tw is a [tailwind.css](https://tailwindcss.com) minification and dead code elimi
 
 
 ; # point tw to your *minified* tailwind.min.css file
-(tw/tailwind.css "./tailwind.min.css")
+(tw/tailwind.min.css "./tailwind.min.css")
 
 
 (GET "/"
