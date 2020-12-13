@@ -1,6 +1,6 @@
 # tw
 
-tw is a [tailwind.css](https://tailwindcss.com) minification and dead code elimination tool that runs at build time
+tw is a [tailwind.css](https://tailwindcss.com) dead code elimination tool that runs at build time
 
 ```clojure
 ; # osprey is used for demo purposes only
