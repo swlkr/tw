@@ -9,10 +9,6 @@ tw is a [tailwind.css](https://tailwindcss.com) minification and dead code elimi
 (import tw)
 
 
-; # point tw to your *minified* tailwind.min.css file
-(tw/tailwind.css "./tailwind.min.css")
-
-
 (GET "/"
   [:html
     [:head
@@ -26,8 +22,16 @@ tw is a [tailwind.css](https://tailwindcss.com) minification and dead code elimi
 
       ; # that's it! you now have *just* the classes you
       ; # need in the style tag for each page
+      ; # could also use (tw/scope "/") before
+      ; # a group of (tw/class) statements
     [:body {:class (tw/class "container mx-auto" "/")}
       "hello world!"]])
+
+
+; # point tw to your *minified* tailwind.min.css file
+; # reads the minified tailwind css file and puts the class bodies
+; # from tw/class in memory
+(tw/tailwind.min.css "./tailwind.min.css")
 
 (server 9001)
 ```
