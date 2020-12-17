@@ -5,6 +5,7 @@
 (var- *tailwind.min.css* "")
 (var- normalize nil)
 (var- shown 0)
+(var- *scope* "")
 
 
 (defmacro tailwind.min.css [filepath]
@@ -12,7 +13,7 @@
 
 
 (defmacro class [str &opt url]
-  (default url "")
+  (default url *scope*)
 
   (++ shown)
 
@@ -27,7 +28,7 @@
     # concat the class names into
     # the tw/classes dictionary
     # throw the global ones in there as well
-    (update tw/classes url (comp distinct array/concat) (get tw/classes "" "") (string/split " " str))
+    (update tw/classes url (comp distinct array/concat) (get tw/classes "" @[]) (string/split " " str))
 
     (with [f (file/open *tailwind.min.css*)]
 
@@ -45,3 +46,7 @@
 
 (defn style [uri]
   (string normalize (get tw/styles uri "")))
+
+
+(defmacro scope [uri]
+  (set *scope* uri))
