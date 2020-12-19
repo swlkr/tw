@@ -9,13 +9,6 @@ tw is a [tailwind.css](https://tailwindcss.com) dead code elimination tool that 
 (import tw)
 
 
-<<<<<<< HEAD
-=======
-; # point tw to your *minified* tailwind.min.css file
-(tw/tailwind.min.css "./tailwind.min.css")
-
-
->>>>>>> a1fc939a76e5541ff476e74c1327c3be7d786c49
 (GET "/"
   [:html
     [:head
