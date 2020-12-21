@@ -43,7 +43,8 @@
 
 
 (defn style [uri]
-  (string normalize (get tw/styles uri "")))
+  (string normalize (or (get tw/styles uri)
+                        (get tw/styles ""))))
 
 
 (defmacro scope [uri]
