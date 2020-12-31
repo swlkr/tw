@@ -1,5 +1,5 @@
 (defn- inspect [val]
-  (printf "%q" val)
+  (printf "%m" val)
   val)
 
 # helpers for responsive media queries
@@ -55,8 +55,10 @@
 
 
 (defn styles [css classes]
-  (let [classes (->> (sort classes)
-                     (reverse)
+  (let [classes (->> classes
+                     distinct
+                     sorted
+                     reverse
                      (map |(string/replace-all `/` `\/` $))
                      (map |(string/replace-all `:` `\:` $)))]
 
