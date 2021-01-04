@@ -3,7 +3,7 @@
 (var- tw/styles @{})
 (var- tw/classes @{})
 (var- normalize nil)
-(var- *scope* "")
+(var- *url* "")
 
 
 (defn tailwind.min.css [filepath]
@@ -24,7 +24,7 @@
 
 
 (defmacro class [str &opt url]
-  (default url *scope*)
+  (default url *url*)
 
   (let [classes (get tw/classes url @[])]
     # add the new classes to the tw/classes
@@ -39,5 +39,5 @@
   (string normalize (get tw/styles uri)))
 
 
-(defmacro scope [uri]
-  (set *scope* uri))
+(defn url [uri]
+  (set *url* uri))
