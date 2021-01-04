@@ -12,20 +12,16 @@
   (with [f (file/open filepath)]
 
     (let [css (file/read f :all)
-          global-styles (get tw/classes "" [])]
+          global-classes (get tw/classes "" [])]
+
+      (set normalize (tailwind/normalize css))
 
       (eachp [k v] tw/classes
-        (let [styles (tailwind/styles css [;v ;global-styles])]
-
-          (unless normalize
-            (set normalize (tailwind/normalize css)))
-
+        (let [styles (tailwind/styles css [;v ;global-classes])]
           (put tw/styles k styles))))))
 
 
-(defmacro class [str &opt url]
-  (default url *url*)
-
+(defn class* [str url]
   (let [classes (get tw/classes url @[])]
     # add the new classes to the tw/classes
     # dictionary
@@ -33,6 +29,16 @@
     (put tw/classes url classes)
 
     str))
+
+
+(defmacro class [str &opt url]
+  (default url *url*)
+  (class* (eval str) url))
+
+
+(defmacro tw [str &opt url]
+  (default url *url*)
+  (class* (eval str) url))
 
 
 (defn style [uri]
