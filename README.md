@@ -22,7 +22,7 @@ tw is a [tailwind.css](https://tailwindcss.com) dead code elimination tool that 
 
       ; # that's it! you now have *just* the classes you
       ; # need in the style tag for each page
-      ; # could also use (tw/scope "/") before
+      ; # could also use (tw/url "/") before
       ; # a group of (tw/class) statements
     [:body {:class (tw/class "container mx-auto" "/")}
       "hello world!"]])
@@ -38,14 +38,15 @@ tw is a [tailwind.css](https://tailwindcss.com) dead code elimination tool that 
 
 # Installation
 
-Make sure janet is installed first (macOS)
+Make sure janet is installed first and then install tw
 
 ```sh
 brew install janet
+jpm install https://github.com/swlkr/tw
 ```
 
-Then install tw using `jpm`
+or add it to your `project.janet` file:
 
-```sh
-jpm install https://github.com/swlkr/tw
+```clojure
+{:dependencies ["https://github.com/swlkr/tw"]}
 ```
