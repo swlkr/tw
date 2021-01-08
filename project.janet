@@ -9,4 +9,3 @@
 
 (declare-source
   :source @["src/tw.janet" "src/tw"])
-
