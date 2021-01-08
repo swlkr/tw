@@ -1,9 +1,11 @@
 (import ./tw/tailwind)
+(import path)
 
 (var- tw/styles @{})
 (var- tw/classes @{})
 (var- normalize nil)
 (var- *url* "")
+(var tw/href "")
 
 
 (defn tailwind.min.css [filepath]
@@ -47,3 +49,35 @@
 
 (defn url [uri]
   (set *url* uri))
+
+
+(defn- tw? [filename]
+  (and (string/has-prefix? "tw" filename)
+       (string/has-suffix? "css" filename)))
+
+
+(defn tw/emit [_ tailwind-min-css &opt _ folder]
+  (default folder "public")
+  (print "Reading minified tailwind css file...")
+
+  (with [f (file/open tailwind-min-css)]
+
+    (var classes @[])
+    (eachp [k v] tw/classes
+      (array/concat classes v))
+
+    (let [css (file/read f :all)
+          normalize (tailwind/normalize css)
+          styles (tailwind/styles css classes)
+          checksum (->> styles hash (string/format "%x"))
+          filename (string "/tw." checksum ".css")]
+
+      (set tw/href filename)
+
+      (print "Writing tw css file")
+
+      (each f (os/dir folder)
+        (when (tw? f)
+          (os/rm (path/join folder f))))
+
+      (spit (path/join folder filename) (string normalize styles)))))
