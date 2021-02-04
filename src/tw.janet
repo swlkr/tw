@@ -56,11 +56,11 @@
        (string/has-suffix? "css" filename)))
 
 
-(defn tw/emit [_ tailwind-min-css &opt _ folder]
+(defn tailwind-min-css [file &opt folder]
   (default folder "public")
   (print "Reading minified tailwind css file...")
 
-  (with [f (file/open tailwind-min-css)]
+  (with [f (file/open file)]
 
     (var classes @[])
     (eachp [k v] tw/classes
