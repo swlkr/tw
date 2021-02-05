@@ -27,7 +27,8 @@
   (let [classes (get tw/classes url @[])]
     # add the new classes to the tw/classes
     # dictionary
-    (array/concat classes (string/split " " str))
+    (as-> (peg/match '(some (choice (capture (some (if-not :s 1))) 1)) str) ?
+          (array/concat classes ?))
     (put tw/classes url classes)
 
     str))
